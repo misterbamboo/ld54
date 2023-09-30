@@ -25,7 +25,7 @@ public class LayerNavigation : MonoBehaviour, ILayerNavigation
 
     private void Start()
     {
-        OnLayerChanged(0);
+        OnLayerChanged?.Invoke(0);
     }
 
     private void Update()
@@ -33,12 +33,12 @@ public class LayerNavigation : MonoBehaviour, ILayerNavigation
         if (Input.GetKeyDown(KeyCode.W))
         {
             ViewedLayer++;
-            OnLayerChanged(ViewedLayer);
+            OnLayerChanged?.Invoke(ViewedLayer);
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             ViewedLayer = Mathf.Clamp(ViewedLayer - 1, 0, int.MaxValue);
-            OnLayerChanged(ViewedLayer);
+            OnLayerChanged?.Invoke(ViewedLayer);
         }
     }
 }
