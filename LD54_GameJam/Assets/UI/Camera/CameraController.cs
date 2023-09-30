@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -7,12 +6,17 @@ public class CameraController : MonoBehaviour
 
     private int TargetViewedLayer { get; set; }
 
-    private float time;
+    private float layerAnimTime;
     private float startingY;
     private float targetY;
 
-    [SerializeField] Vector3 posOffset;
-    [SerializeField] Vector3 rotationOffset;
+    [SerializeField] float yOffset = 8;
+    [SerializeField] float lookAtYOffset = 2;
+    [SerializeField] float distOffset = 5;
+
+    private float angleAnimTime;
+    private float startingRadAngle;
+    private float targetRadAngle;
 
     void Start()
     {
@@ -22,54 +26,74 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        CheckSelectedViewedLayer();
+        ChackRotationChanged();
+        SmoothCameraMoveToAngle();
+
+        CheckViewedLayerChanged();
         SmoothCameraMoveToTargetViewedLayer();
-        ApplyRotation();
     }
 
-    private void CheckSelectedViewedLayer()
+    private void CheckViewedLayerChanged()
     {
         if (TargetViewedLayer != LayerNavigationInstance.ViewedLayer)
         {
             ChangeTargetViewedLayer(LayerNavigationInstance.ViewedLayer);
-            print(LayerNavigationInstance.ViewedLayer);
+        }
+    }
+
+    private void ChackRotationChanged()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            angleAnimTime = 0;
+            startingRadAngle = targetRadAngle;
+            targetRadAngle += Mathf.PI / 2;
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            angleAnimTime = 0;
+            startingRadAngle = targetRadAngle;
+            targetRadAngle -= Mathf.PI / 2;
         }
     }
 
     private void ChangeTargetViewedLayer(int viewedLayer)
     {
-        time = 0f;
-        startingY = transform.position.y;
-        targetY = viewedLayer + posOffset.y;
+        layerAnimTime = 0f;
+        startingY = transform.position.y - yOffset;
+        targetY = viewedLayer;
         TargetViewedLayer = viewedLayer;
     }
 
     private void SmoothCameraMoveToTargetViewedLayer()
     {
-        if (time >= 1) return;
+        layerAnimTime += Time.deltaTime;
+        layerAnimTime = Mathf.Clamp(layerAnimTime, 0, 1);
 
-        time += Time.deltaTime;
-        time = Mathf.Clamp(time, 0, 1);
-
-        var t = Easing.EaseOut(time, 5);
+        var t = Easing.EaseOut(layerAnimTime, 5);
         var posY = Mathf.Lerp(startingY, targetY, t);
 
-        ApplyPosition(posY);
-    }
-
-    private void ApplyPosition(float posY)
-    {
         var pos = transform.position;
-        pos.x = posOffset.x;
-        pos.z = posOffset.z;
-        pos.y = posY;
+        pos.y = posY + yOffset;
         transform.position = pos;
+
+        transform.LookAt(Vector3.zero + new Vector3(0, posY + lookAtYOffset, 0));
     }
 
-    private void ApplyRotation()
+    private void SmoothCameraMoveToAngle()
     {
-        var angles = Quaternion.identity.eulerAngles;
-        angles += rotationOffset;
-        transform.rotation = Quaternion.Euler(angles);
+        angleAnimTime += Time.deltaTime;
+        angleAnimTime = Mathf.Clamp(angleAnimTime, 0, 1);
+
+        var t = Easing.EaseOut(angleAnimTime, 5);
+        var radAngle = Mathf.Lerp(startingRadAngle, targetRadAngle, t);
+
+        var x = Mathf.Cos(radAngle) * distOffset;
+        var z = Mathf.Sin(radAngle) * distOffset;
+
+        var pos = transform.position;
+        pos.x = x;
+        pos.z = z;
+        transform.position = pos;
     }
 }

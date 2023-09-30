@@ -131,5 +131,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c8fd7babd6d9bb41a9b8ac286bf18e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  posOffset: {x: -6, y: 6, z: -6}
-  rotationOffset: {x: 35, y: 45, z: 0}
+  yOffset: 8
+  lookAtYOffset: 2
+  distOffset: 5

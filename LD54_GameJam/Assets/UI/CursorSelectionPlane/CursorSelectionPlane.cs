@@ -45,10 +45,9 @@ public class CursorSelectionPlane : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 100, cursorSelectionPlaneMask))
         {
             var point = hit.point;
-            point.x = Mathf.Clamp((int)point.x - 1, minX, maxX);
+            point.x = Mathf.FloorToInt(Mathf.Clamp(point.x, minX, maxX));
             point.y = (int)point.y;
-            point.z = Mathf.Clamp((int)point.z - 1, minZ, maxZ);
-
+            point.z = Mathf.FloorToInt(Mathf.Clamp(point.z, minZ, maxZ));
             indicatorPos.position = point;
         }
     }
