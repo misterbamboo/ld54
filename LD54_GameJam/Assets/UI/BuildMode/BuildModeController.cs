@@ -61,7 +61,6 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
         }
     }
 
-
     void Update()
     {
         if (IsBuildModeActivated)
@@ -113,6 +112,29 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
             }
 
             UpdateFlashAndActiveState(indexPos, isSlotAvailable);
+            UpdateWhenElevator(indexPos);
+        }
+    }
+
+    private void UpdateWhenElevator(Vector3 indexPos)
+    {
+        if (factoryItem != null)
+        {
+            var elevator = factoryItem.GetComponent<Elevator>();
+            if (elevator != null)
+            {
+                bool isBase = true;
+                if (indexPos.y > 0)
+                {
+                    var go = mapGrid.GetGameObject(indexPos - new Vector3(0, 1, 0));
+                    if (go != null && ((MonoBehaviour)go).GetComponent<Elevator>())
+                    {
+                        isBase = false;
+                    }
+                }
+
+                elevator.ChangeIsBase(isBase);
+            }
         }
     }
 

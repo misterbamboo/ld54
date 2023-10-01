@@ -46,6 +46,17 @@ public class MapGrid
         }
     }
 
+    public IFactoryItem? GetGameObject(Vector3 indexPos)
+    {
+        var slot = GetSlot(indexPos);
+        if (slot != null)
+        {
+            return slot.FactoryItem;
+        }
+
+        return null;
+    }
+
     private MapGridSlot? GetSlot(Vector3 indexPos)
     {
         int y = (int)indexPos.y;
