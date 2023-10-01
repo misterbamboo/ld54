@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Smelter : MonoBehaviour
 {
-    public Extractor[] extractors;
+    public Extractor_OG[] extractors;
     
     public int maxInputStock;
     public int currentInputStock;    

@@ -106,7 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7063478187612865932}
-  - component: {fileID: 8477082482819465920}
+  - component: {fileID: 8760729617694087224}
   m_Layer: 0
   m_Name: Extractor
   m_TagString: Untagged
@@ -131,7 +131,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8477082482819465920
+--- !u!114 &8760729617694087224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,10 +140,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4258309118164681671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 591ac04d749b87b41ad9aa84507fcf03, type: 3}
+  m_Script: {fileID: 11500000, guid: a9b88519d93021641b0d576b3a9ccd9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 1
+  interval: 30
   spawnPosition: {fileID: 738819750413535655}
   prefabRessource: {fileID: 6407816104039442487, guid: fadc5420ceae4254d817623c324e4088,
     type: 3}
@@ -257,6 +257,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591ac04d749b87b41ad9aa84507fcf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 1
-  spawnPosition: {fileID: 0}
-  prefabRessource: {fileID: 0}
+  maxStock: 0
+  currentStock: 0
+  productionInterval: 0
+  outputInterval: 0
+  productionRate: 0
+  outputRate: 0
+  productionTimer: 0
+  outputTimer: 0

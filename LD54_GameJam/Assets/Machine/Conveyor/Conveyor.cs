@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Conveyor : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    [SerializeField]
+    GameObject target;
+
+    public void SetRessourceTarget(RessourceMovement ressourceMovement)
     {
-        print("OnTriggerEnter");
+        ressourceMovement.SetTarget(target);
     }
 }

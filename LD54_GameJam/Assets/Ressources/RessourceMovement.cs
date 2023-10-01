@@ -6,6 +6,9 @@ public class RessourceMovement : MonoBehaviour
 {
     private GameObject target;
 
+    [SerializeField]
+    private float speed = 1f;
+
     public void SetTarget(GameObject gameObject)
     {
         target = gameObject;
@@ -13,10 +16,17 @@ public class RessourceMovement : MonoBehaviour
 
     public void Update()
     {
-        // move to target
+        // move to target with speed
         if (target != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 0.1f);
+            var direction = target.transform.position - transform.position;
+            var distance = direction.magnitude;
+            var movement = direction.normalized * speed * Time.deltaTime;
+            if (movement.magnitude > distance)
+            {
+                movement = direction;
+            }
+            transform.position += movement;
         }
     }
 }

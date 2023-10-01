@@ -21,7 +21,9 @@ public class Extractor : MonoBehaviour
     // coroutine spawn object at interval
     IEnumerator SpawnObject()
     {
-        yield return new WaitForSeconds(interval);
         Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(interval);
+
+        StartCoroutine(SpawnObject());
     }
 }
