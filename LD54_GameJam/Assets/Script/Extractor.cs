@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
 public class Extractor : MonoBehaviour
 {
     public int maxStock;
@@ -66,3 +67,4 @@ public class Extractor : MonoBehaviour
         currentStock -= 1;
     }
 }
+*/
