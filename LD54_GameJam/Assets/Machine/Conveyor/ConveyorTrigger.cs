@@ -8,10 +8,17 @@ public class ConveyorTrigger : MonoBehaviour
     [SerializeField]
     Conveyor conveyor;
 
+    FactoryItem factoryItem = null;
+
+    private void Awake()
+    {
+        factoryItem = GetComponentInParent<FactoryItem>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var ressourceMovement = other.GetComponent<RessourceMovement>();
-        if (ressourceMovement != null)
+        if (ressourceMovement != null && factoryItem.IsPlaced)
         {
             conveyor.SetRessourceTarget(ressourceMovement);
         }

@@ -8,12 +8,27 @@ public class ConnectionDetection : MonoBehaviour
 
     public bool IsConnected => isConnected;
 
+    GameObject collider = null;
+
+    void Update()
+    {
+        if (collider != null)
+        {
+            var factoryItem = collider.GetComponentInParent<FactoryItem>();
+            if (factoryItem != null && factoryItem.IsPlaced)
+            {
+                isConnected = true;
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         var conveyor = other.GetComponentInParent<Conveyor>();
+        var factoryItem = other.GetComponentInParent<FactoryItem>();
         if (conveyor != null)
         {
-            isConnected = true;
+            collider = other.gameObject;
         }
     }
 
@@ -22,6 +37,7 @@ public class ConnectionDetection : MonoBehaviour
         var conveyor = other.GetComponentInParent<Conveyor>();
         if (conveyor != null)
         {
+            collider = null;
             isConnected = false;
         }
     }

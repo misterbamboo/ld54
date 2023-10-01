@@ -134,6 +134,7 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
             return;
         }
 
+        factoryItem.SetPlaced(true);
         factoryItem.SetFlashing(false);
         mapGrid.SetGameObject(indexPos, factoryItem);
 

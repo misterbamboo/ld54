@@ -6,5 +6,7 @@ using System.Threading.Tasks;
 
 public interface IFactoryItem
 {
+    void SetPlaced(bool value);
+
     void SetFlashing(bool flashing);
 }
