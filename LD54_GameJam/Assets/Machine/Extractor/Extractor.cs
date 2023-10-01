@@ -7,6 +7,12 @@ public class Extractor : MonoBehaviour
     [SerializeField]
     float interval = 1.0f;
 
+    [SerializeField]
+    GameObject spawnPosition;
+
+    [SerializeField]
+    GameObject prefabRessource;
+
     public void Start()
     {
         StartCoroutine(SpawnObject());
@@ -16,6 +22,6 @@ public class Extractor : MonoBehaviour
     IEnumerator SpawnObject()
     {
         yield return new WaitForSeconds(interval);
-
+        Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
     }
 }
