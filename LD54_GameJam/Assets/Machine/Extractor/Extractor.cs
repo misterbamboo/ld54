@@ -4,25 +4,61 @@ using UnityEngine;
 
 public class Extractor : MonoBehaviour
 {
-    [SerializeField]
-    float interval = 1.0f;
+    [SerializeField] private GameObject spawnPosition;
+    [SerializeField] private GameObject prefabRessource;
 
-    [SerializeField]
-    GameObject spawnPosition;
+    [SerializeField] private int maxStock;
+    [SerializeField] private int currentStock;
 
-    [SerializeField]
-    GameObject prefabRessource;
+    [SerializeField] private float productionInterval;
+    [SerializeField] private float outputInterval;
 
-    public void Start()
+    [SerializeField] private int productionRate;
+
+    private float _productionTimer;
+    private float _outputTimer;
+    
+    private void Start()
     {
+        currentStock = 0;
         StartCoroutine(SpawnObject());
     }
 
-    // coroutine spawn object at interval
-    IEnumerator SpawnObject()
+    private void Update()
     {
+        _productionTimer += Time.deltaTime;
+        _outputTimer += Time.deltaTime;
+
+        if (_productionTimer < productionInterval && _outputTimer < outputInterval) return;
+
+        if (_productionTimer >= productionInterval)
+        {
+            ProduceResource();
+            _productionTimer = 0;
+        }
+
+        if (_outputTimer >= outputInterval)
+        {
+            StartCoroutine(SpawnObject());
+            _outputTimer = 0;
+        }
+    }
+
+    // coroutine spawn object at interval
+    private IEnumerator SpawnObject()
+    {
+        if (currentStock <= 0) yield break;
+        
         Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(interval);
-        StartCoroutine(SpawnObject());
+        currentStock -= 1;
+        yield return new WaitForSeconds(outputInterval);
+    }
+
+    private void ProduceResource()
+    {
+        var stockDelta = currentStock + productionRate <= maxStock 
+            ? productionRate : maxStock - currentStock;
+
+        currentStock += stockDelta;
     }
 }
