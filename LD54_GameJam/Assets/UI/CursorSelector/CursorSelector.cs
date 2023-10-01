@@ -62,9 +62,9 @@ public class CursorSelector : MonoBehaviour, ICursorSelector
         if (Physics.Raycast(ray, out hit, 100, cursorSelectionPlaneMask))
         {
             var point = hit.point;
-            point.x = Mathf.FloorToInt(Mathf.Clamp(point.x, minX, maxX));
+            point.x = Mathf.FloorToInt(Mathf.Clamp(point.x + 0.5f, minX, maxX));
             point.y = (int)point.y;
-            point.z = Mathf.FloorToInt(Mathf.Clamp(point.z, minZ, maxZ));
+            point.z = Mathf.FloorToInt(Mathf.Clamp(point.z + 0.5f, minZ, maxZ));
 
             if (CursorPos != point)
             {

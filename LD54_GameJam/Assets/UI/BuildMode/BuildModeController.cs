@@ -33,7 +33,24 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
     void Start()
     {
         CursorSelector.Instance.OnCursorPosChanged += Instance_OnCursorPosChanged1;
+        CameraController.Instance.OnTargetRadAngleChanged += Instance_OnTargetRadAngleChanged;
         mapGrid = MapGridController.Instance.MapGrid;
+    }
+
+    private void Instance_OnTargetRadAngleChanged()
+    {
+        if (factoryItem != null)
+        {
+            ChangeFactoryItemRotation();
+        }
+    }
+
+    private void ChangeFactoryItemRotation()
+    {
+        var angles = Quaternion.identity.eulerAngles;
+        angles.y = (-CameraController.Instance.TargetRadAngle - Mathf.PI / 2) * Mathf.Rad2Deg;
+
+        factoryItem.transform.rotation = Quaternion.Euler(angles);
     }
 
     private void Instance_OnCursorPosChanged1(Vector3 previousPos, Vector3 newPos)
@@ -66,6 +83,7 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
         factoryItem = Instantiate(FactoryItemPrefab, gameObject.transform);
         factoryItem.transform.position = CursorSelector.Instance.CursorPos;
         factoryItem.SetFlashing(false);
+        ChangeFactoryItemRotation();
     }
 
     public void AbortBuildMode()
