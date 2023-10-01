@@ -8,37 +8,46 @@ public class ConnectionDetection : MonoBehaviour
 
     public bool IsConnected => isConnected;
 
-    GameObject collider = null;
+    Conveyor savedConveyor = null;
 
     void Update()
     {
-        if (collider != null)
+        if (savedConveyor != null)
         {
-            var factoryItem = collider.GetComponentInParent<FactoryItem>();
+            var factoryItem = savedConveyor.GetComponentInParent<FactoryItem>();
             if (factoryItem != null && factoryItem.IsPlaced)
             {
                 isConnected = true;
+            }
+            else if(isConnected)
+            {
+                isConnected = false;
             }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (savedConveyor != null)
+            return;
+
         var conveyor = other.GetComponentInParent<Conveyor>();
-        var factoryItem = other.GetComponentInParent<FactoryItem>();
-        if (conveyor != null)
-        {
-            collider = other.gameObject;
-        }
+        if (conveyor == null)      
+            return;
+
+        var factoryItem = conveyor.GetComponentInParent<FactoryItem>();
+        if (factoryItem == null && !factoryItem.IsPlaced)
+            return;
+
+        savedConveyor = conveyor;                           
     }
 
     private void OnTriggerExit(Collider other)
     {
         var conveyor = other.GetComponentInParent<Conveyor>();
-        if (conveyor != null)
-        {
-            collider = null;
-            isConnected = false;
-        }
+        if (conveyor == null)
+            return;
+        
+        savedConveyor = null;     
     }
 }

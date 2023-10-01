@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnPointGizmo : MonoBehaviour
+public class SpawnPoint : MonoBehaviour
 {
     private void OnDrawGizmos()
     {

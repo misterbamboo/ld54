@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Extractor : MonoBehaviour
 {
-    [SerializeField] private GameObject spawnPosition;
     [SerializeField] private GameObject prefabRessource;
 
     [SerializeField] private int maxStock = 20;
@@ -17,12 +17,16 @@ public class Extractor : MonoBehaviour
 
     [SerializeField] private Animator animator;
 
-    [SerializeField] private ConnectionDetection connectionDetection;
+    private List<ConnectionDetection> connectionDetections = new List<ConnectionDetection>();
 
     private float _productionTimer;
     private float _outputTimer;
 
-    
+    private void Awake()
+    {
+        connectionDetections = gameObject.gameObject.GetComponentsInChildren<ConnectionDetection>().ToList();
+    }
+
     private void Update()
     {
         _productionTimer += Time.deltaTime;
@@ -44,12 +48,20 @@ public class Extractor : MonoBehaviour
     }
 
     private void SpawnObject()
-    {        
-        if (currentStock > 0 && connectionDetection.IsConnected)
+    {   
+        var connectionDetectionConnecteds = connectionDetections.Where(c => c.IsConnected);
+        if (connectionDetectionConnecteds.Count() > 0 && currentStock > 0)
         {
             animator.SetTrigger("Output");
-            Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
-            currentStock -= 1;
+            foreach (var connectionDetection in connectionDetectionConnecteds)
+            {
+                if (currentStock > 0)
+                {
+                    var spawnPoint = connectionDetection.GetComponentInParent<SpawnPoint>();
+                    Instantiate(prefabRessource, spawnPoint.transform.position, Quaternion.identity);
+                    currentStock -= 1;
+                }
+            }            
         }
     }
 
