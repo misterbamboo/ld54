@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RessourceMovement : MonoBehaviour
 {
-    private GameObject target;
+    private GameObject target = null;
 
     [SerializeField]
     private float speed = 1f;
