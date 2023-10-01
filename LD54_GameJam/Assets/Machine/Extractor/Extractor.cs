@@ -23,6 +23,6 @@ public class Extractor : MonoBehaviour
     {
         Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(interval);
-        StartCoroutine(SpawnObject());
+        // StartCoroutine(SpawnObject());
     }
 }
