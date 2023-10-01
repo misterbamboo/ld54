@@ -40,16 +40,21 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
     {
         if (factoryItem != null)
         {
-            UpdateFactoryItemState(previousPos, newPos);
-            factoryItem.transform.position = CursorSelector.Instance.CursorPos;
+            RefreshFactoryItem(previousPos, newPos);
         }
+    }
+
+    private void RefreshFactoryItem(Vector3 previousPos, Vector3 newPos)
+    {
+        UpdateFactoryItemState(previousPos, newPos);
+        factoryItem.transform.position = CursorSelector.Instance.CursorPos;
     }
 
     void Update()
     {
         if (IsBuildModeActivated)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonDown(0))
             {
                 PlaceFactoryItem();
             }
@@ -59,6 +64,7 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
     public void ActivateBuildMode(FactoryItem FactoryItemPrefab)
     {
         factoryItem = Instantiate(FactoryItemPrefab, gameObject.transform);
+        factoryItem.transform.position = CursorSelector.Instance.CursorPos;
         factoryItem.SetFlashing(false);
     }
 
@@ -110,7 +116,7 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
             return;
         }
 
-        factoryItem.SetFlashing(true);
+        factoryItem.SetFlashing(false);
         mapGrid.SetGameObject(indexPos, factoryItem);
 
         factoryItem.transform.SetParent(mapParent, true);

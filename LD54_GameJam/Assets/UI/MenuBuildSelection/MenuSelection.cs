@@ -1,9 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class MenuSelection : MonoBehaviour, IPointerExitHandler
 {
@@ -15,6 +14,8 @@ public class MenuSelection : MonoBehaviour, IPointerExitHandler
 
     [SerializeField]
     ScrollRect scrollRect;
+
+    public ItemPrefabMap[] ItemPrefabMaps { get; private set; }
 
     public void Start()
     {
@@ -28,7 +29,9 @@ public class MenuSelection : MonoBehaviour, IPointerExitHandler
 
     public void ButtonOnClick(MenuItemType menuItemType)
     {
-        print(menuItemType.ToString());
+        var prefab = ItemPrefabMaps.Where(p => p.menuItemType == menuItemType).Select(p => p.prefab).First();
+        BuildModeController.Instance.ActivateBuildMode(prefab);
+        Enable(false);
     }
 
     public void Enable(bool value)
@@ -38,5 +41,10 @@ public class MenuSelection : MonoBehaviour, IPointerExitHandler
         scrollView.SetActive(value);
 
         scrollRect.verticalNormalizedPosition = 1;
+    }
+
+    public void Init(ItemPrefabMap[] itemPrefabMaps)
+    {
+        ItemPrefabMaps = itemPrefabMaps;
     }
 }

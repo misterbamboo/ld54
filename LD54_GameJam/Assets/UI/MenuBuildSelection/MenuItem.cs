@@ -25,9 +25,11 @@ public class MenuItem : MonoBehaviour
 
 public enum MenuItemType
 {
-    Building0,
-    Building1,
-    Building2,
-    Building3,
-    Building4,
+    Extractor,
+    Belt,
+    Forge,
+    Splitter,
+    Merger,
+    Storage,
+    Garbage
 }
