@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2111220375767989930}
   - component: {fileID: 5766406801765157507}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7063478187612865932}
+  - component: {fileID: 8477082482819465920}
   m_Layer: 0
   m_Name: Extractor
   m_TagString: Untagged
@@ -130,6 +131,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8477082482819465920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4258309118164681671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591ac04d749b87b41ad9aa84507fcf03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 1
+  spawnPosition: {fileID: 738819750413535655}
+  prefabRessource: {fileID: 6407816104039442487, guid: fadc5420ceae4254d817623c324e4088,
+    type: 3}
 --- !u!1 &5206123310229573593
 GameObject:
   m_ObjectHideFlags: 0
@@ -240,11 +257,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 591ac04d749b87b41ad9aa84507fcf03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStock: 100
-  currentStock: 0
-  productionInterval: 0
-  outputInterval: 0
-  productionRate: 0
-  outputRate: 4
-  productionTimer: 0
-  outputTimer: 0
+  interval: 1
+  spawnPosition: {fileID: 0}
+  prefabRessource: {fileID: 0}
