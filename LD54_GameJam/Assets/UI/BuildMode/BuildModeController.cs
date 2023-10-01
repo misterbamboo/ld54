@@ -57,15 +57,10 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
     {
         if (factoryItem != null)
         {
-            RefreshFactoryItem(previousPos, newPos);
+            UpdateFactoryItemState(previousPos, newPos);
         }
     }
 
-    private void RefreshFactoryItem(Vector3 previousPos, Vector3 newPos)
-    {
-        UpdateFactoryItemState(previousPos, newPos);
-        factoryItem.transform.position = CursorSelector.Instance.CursorPos;
-    }
 
     void Update()
     {
@@ -92,17 +87,38 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
         factoryItem = null;
     }
 
-    private void UpdateFactoryItemState(Vector3 previousPos, Vector3 cursorPos)
+    private void UpdateFactoryItemState(Vector3 previousPos, Vector3 newPos)
     {
         if (factoryItem != null)
         {
-            Vector3 previousIndexPos = ToIndexPos(previousPos);
+            // get rotation, inverted
+            float radRotationAngle = GetNeededRotation();
+
+            factoryItem.transform.position = newPos;
+
+            Vector3 previousIndexPos = previousPos.ToIndexPos();
             UpdateFlashAndActiveState(previousIndexPos, true);
 
-            Vector3 indexPos = ToIndexPos(cursorPos);
-            var isSlotAvailable = mapGrid.IsSlotAvailable(indexPos);
+            var isSlotAvailable = true;
+            Vector3 indexPos = newPos.ToIndexPos();
+            var takenSpaces = factoryItem.GetTakenSpaces();
+            foreach (var space in takenSpaces)
+            {
+                var lookPos = indexPos + space.Rotate(radRotationAngle);
+                if (!mapGrid.IsSlotAvailable(lookPos))
+                {
+                    isSlotAvailable = false;
+                    break;
+                }
+            }
+
             UpdateFlashAndActiveState(indexPos, isSlotAvailable);
         }
+    }
+
+    private static float GetNeededRotation()
+    {
+        return -CameraController.Instance.TargetRadAngle - Mathf.PI / 2;
     }
 
     private void UpdateFlashAndActiveState(Vector3 indexPos, bool isSlotAvailable)
@@ -119,14 +135,9 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
         }
     }
 
-    private static Vector3 ToIndexPos(Vector3 cursorPos)
-    {
-        return cursorPos + new Vector3(5, 0, 5);
-    }
-
     private void PlaceFactoryItem()
     {
-        Vector3 indexPos = ToIndexPos(CursorSelector.Instance.CursorPos);
+        Vector3 indexPos = CursorSelector.Instance.CursorPos.ToIndexPos();
         var isSlotAvailable = mapGrid.IsSlotAvailable(indexPos);
 
         if (!isSlotAvailable)
@@ -136,7 +147,14 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
 
         factoryItem.SetPlaced(true);
         factoryItem.SetFlashing(false);
-        mapGrid.SetGameObject(indexPos, factoryItem);
+
+        float radRotationAngle = GetNeededRotation();
+        var takenSpaces = factoryItem.GetTakenSpaces();
+        foreach (var space in takenSpaces)
+        {
+            var lookPos = indexPos + space.Rotate(radRotationAngle);
+            mapGrid.SetGameObject(lookPos, factoryItem);
+        }
 
         factoryItem.transform.SetParent(mapParent, true);
 

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MenuItem : MonoBehaviour
 {
@@ -25,7 +22,9 @@ public class MenuItem : MonoBehaviour
 
 public enum MenuItemType
 {
-    Extractor,
+    ExtractorRed,
+    ExtractorBlue,
+    ExtractorYellow,
     Belt,
     Forge,
     Splitter,

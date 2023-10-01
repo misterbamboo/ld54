@@ -48,11 +48,11 @@ public class Extractor : MonoBehaviour
     }
 
     private void SpawnObject()
-    {   
+    {
         var connectionDetectionConnecteds = connectionDetections.Where(c => c.IsConnected);
         if (connectionDetectionConnecteds.Count() > 0 && currentStock > 0)
         {
-            animator.SetTrigger("Output");
+            SetTrigger("Output");
             foreach (var connectionDetection in connectionDetectionConnecteds)
             {
                 if (currentStock > 0)
@@ -61,18 +61,30 @@ public class Extractor : MonoBehaviour
                     Instantiate(prefabRessource, spawnPoint.transform.position, Quaternion.identity);
                     currentStock -= 1;
                 }
-            }            
+            }
+        }
+    }
+
+    private void SetTrigger(string name)
+    {
+        if (animator == null)
+        {
+            Debug.LogError("Animator is not assigned");
+        }
+        else
+        {
+            animator.SetTrigger(name);
         }
     }
 
     private void ProduceResource()
     {
-        var stockDelta = currentStock + productionRate <= maxStock 
+        var stockDelta = currentStock + productionRate <= maxStock
             ? productionRate : maxStock - currentStock;
 
         if (stockDelta > 0)
-        { 
-            animator.SetTrigger("Produce");
+        {
+            SetTrigger("Produce");
         }
 
         currentStock += stockDelta;
