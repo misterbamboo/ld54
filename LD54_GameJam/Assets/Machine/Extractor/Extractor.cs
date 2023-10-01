@@ -15,8 +15,11 @@ public class Extractor : MonoBehaviour
 
     [SerializeField] private int productionRate;
 
+    [SerializeField] private Animator animator;
+    
     private float _productionTimer;
     private float _outputTimer;
+
     
     private void Update()
     {
@@ -41,7 +44,8 @@ public class Extractor : MonoBehaviour
     private IEnumerator SpawnObject()
     {        
         if (currentStock > 0)
-        { 
+        {
+            animator.SetTrigger("Output");
             Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
             currentStock -= 1;
             yield return new WaitForSeconds(outputInterval);
@@ -52,6 +56,11 @@ public class Extractor : MonoBehaviour
     {
         var stockDelta = currentStock + productionRate <= maxStock 
             ? productionRate : maxStock - currentStock;
+
+        if (stockDelta > 0)
+        { 
+            animator.SetTrigger("Produce");
+        }
 
         currentStock += stockDelta;
     }

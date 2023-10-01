@@ -10,11 +10,9 @@ public class ConveyorTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("OnTriggerEnter");
         var ressourceMovement = other.GetComponent<RessourceMovement>();
         if (ressourceMovement != null)
         {
-            print("ressourceMovement");
             conveyor.SetRessourceTarget(ressourceMovement);
         }
     }
