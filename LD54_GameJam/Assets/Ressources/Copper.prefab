@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6407816104039442486}
   - component: {fileID: 3358072112631451054}
   - component: {fileID: 3405858863035200190}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Copper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,6 +111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a74884c527b6234ab52be1bf76a7cde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 1
 --- !u!54 &3405858863035200190
 Rigidbody:
   m_ObjectHideFlags: 0

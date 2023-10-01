@@ -4,25 +4,65 @@ using UnityEngine;
 
 public class Extractor : MonoBehaviour
 {
-    [SerializeField]
-    float interval = 1.0f;
+    [SerializeField] private GameObject spawnPosition;
+    [SerializeField] private GameObject prefabRessource;
 
-    [SerializeField]
-    GameObject spawnPosition;
+    [SerializeField] private int maxStock = 20;
+    [SerializeField] private int currentStock = 0;
 
-    [SerializeField]
-    GameObject prefabRessource;
+    [SerializeField] private float productionInterval = 1.0f;
+    [SerializeField] private float outputInterval = 1.0f;
 
-    public void Start()
+    [SerializeField] private int productionRate;
+
+    [SerializeField] private Animator animator;
+
+    [SerializeField] private ConnectionDetection connectionDetection;
+
+    private float _productionTimer;
+    private float _outputTimer;
+
+    
+    private void Update()
     {
-        StartCoroutine(SpawnObject());
+        _productionTimer += Time.deltaTime;
+        _outputTimer += Time.deltaTime;
+
+        if (_productionTimer < productionInterval && _outputTimer < outputInterval) return;
+
+        if (_productionTimer >= productionInterval)
+        {
+            ProduceResource();
+            _productionTimer = 0;
+        }
+
+        if (_outputTimer >= outputInterval)
+        {
+            SpawnObject();
+            _outputTimer = 0;
+        }
     }
 
-    // coroutine spawn object at interval
-    IEnumerator SpawnObject()
+    private void SpawnObject()
+    {        
+        if (currentStock > 0 && connectionDetection.IsConnected)
+        {
+            animator.SetTrigger("Output");
+            Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
+            currentStock -= 1;
+        }
+    }
+
+    private void ProduceResource()
     {
-        Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(interval);
-        StartCoroutine(SpawnObject());
+        var stockDelta = currentStock + productionRate <= maxStock 
+            ? productionRate : maxStock - currentStock;
+
+        if (stockDelta > 0)
+        { 
+            animator.SetTrigger("Produce");
+        }
+
+        currentStock += stockDelta;
     }
 }
