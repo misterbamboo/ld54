@@ -120,7 +120,8 @@ MonoBehaviour:
   - menuItemType: 0
     prefab: {fileID: 963199802608512806, guid: a2d23d47cda408f48b0ccd045b0310a0, type: 3}
   - menuItemType: 1
-    prefab: {fileID: 963199802608512806, guid: a2d23d47cda408f48b0ccd045b0310a0, type: 3}
+    prefab: {fileID: 4251972140170314259, guid: 509543196e9a4f3409972712a3a268a5,
+      type: 3}
   - menuItemType: 2
     prefab: {fileID: 963199802608512806, guid: a2d23d47cda408f48b0ccd045b0310a0, type: 3}
   - menuItemType: 3
