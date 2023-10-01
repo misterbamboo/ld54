@@ -10,7 +10,6 @@ public class ConnectionDetection : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        print("OnTriggerEnter");
         var conveyor = other.GetComponentInParent<Conveyor>();
         if (conveyor != null)
         {
@@ -20,7 +19,6 @@ public class ConnectionDetection : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        print("OnTriggerExit");
         var conveyor = other.GetComponentInParent<Conveyor>();
         if (conveyor != null)
         {
