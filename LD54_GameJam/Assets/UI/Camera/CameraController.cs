@@ -1,22 +1,40 @@
+using System;
 using UnityEngine;
 
-public class CameraController : MonoBehaviour
+public interface ICameraController
 {
-    private ILayerNavigation LayerNavigationInstance { get; set; }
+    float TargetRadAngle { get; }
 
+    event Action OnTargetRadAngleChanged;
+}
+
+public class CameraController : MonoBehaviour, ICameraController
+{
+    public static ICameraController Instance { get; private set; }
+    public float TargetRadAngle => targetRadAngle;
+
+    public event Action OnTargetRadAngleChanged;
+
+    [SerializeField] float yOffset = 8;
+    [SerializeField] float lookAtYOffset = 2;
+    [SerializeField] float distOffset = 5;
+
+    private ILayerNavigation LayerNavigationInstance { get; set; }
     private int TargetViewedLayer { get; set; }
 
     private float layerAnimTime;
     private float startingY;
     private float targetY;
 
-    [SerializeField] float yOffset = 8;
-    [SerializeField] float lookAtYOffset = 2;
-    [SerializeField] float distOffset = 5;
-
     private float angleAnimTime;
     private float startingRadAngle;
-    private float targetRadAngle;
+    private float targetRadAngle = -Mathf.PI / 2;
+
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     void Start()
     {
@@ -26,7 +44,7 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        ChackRotationChanged();
+        CheckRotationChanged();
         SmoothCameraMoveToAngle();
 
         CheckViewedLayerChanged();
@@ -41,19 +59,21 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private void ChackRotationChanged()
+    private void CheckRotationChanged()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            angleAnimTime = 0;
-            startingRadAngle = targetRadAngle;
-            targetRadAngle += Mathf.PI / 2;
-        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             angleAnimTime = 0;
             startingRadAngle = targetRadAngle;
+            targetRadAngle += Mathf.PI / 2;
+            OnTargetRadAngleChanged?.Invoke();
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            angleAnimTime = 0;
+            startingRadAngle = targetRadAngle;
             targetRadAngle -= Mathf.PI / 2;
+            OnTargetRadAngleChanged?.Invoke();
         }
     }
 
