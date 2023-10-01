@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8031688610252287067}
   - component: {fileID: 8571072073212515645}
   m_Layer: 31
-  m_Name: CursorSelectionPlane
+  m_Name: CursorSelector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
