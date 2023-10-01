@@ -143,10 +143,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b88519d93021641b0d576b3a9ccd9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interval: 1
   spawnPosition: {fileID: 738819750413535655}
   prefabRessource: {fileID: 6407816104039442487, guid: fadc5420ceae4254d817623c324e4088,
     type: 3}
+  maxStock: 10
+  currentStock: 5
+  productionInterval: 1
+  outputInterval: 1
+  productionRate: 1
 --- !u!1 &5206123310229573593
 GameObject:
   m_ObjectHideFlags: 0

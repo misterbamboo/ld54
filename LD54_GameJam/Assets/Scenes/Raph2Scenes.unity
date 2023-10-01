@@ -169,11 +169,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Extractor
       objectReference: {fileID: 0}
-    - target: {fileID: 5206123310229573589, guid: 5ede91bdc0245ca42a4f957bc38382d1,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7063478187612865932, guid: 5ede91bdc0245ca42a4f957bc38382d1,
         type: 3}
       propertyPath: m_RootOrder

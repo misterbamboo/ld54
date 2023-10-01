@@ -19,7 +19,7 @@ public class RessourceMovement : MonoBehaviour
 
     public void Update()
     {
-        if (target == null || !shouldMove) 
+        if (!shouldMove) 
             return;
         
         var direction = target.transform.position - transform.position;

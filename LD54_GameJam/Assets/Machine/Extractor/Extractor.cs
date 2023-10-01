@@ -7,23 +7,17 @@ public class Extractor : MonoBehaviour
     [SerializeField] private GameObject spawnPosition;
     [SerializeField] private GameObject prefabRessource;
 
-    [SerializeField] private int maxStock;
-    [SerializeField] private int currentStock;
+    [SerializeField] private int maxStock = 20;
+    [SerializeField] private int currentStock = 0;
 
-    [SerializeField] private float productionInterval;
-    [SerializeField] private float outputInterval;
+    [SerializeField] private float productionInterval = 1.0f;
+    [SerializeField] private float outputInterval = 1.0f;
 
     [SerializeField] private int productionRate;
 
     private float _productionTimer;
     private float _outputTimer;
     
-    private void Start()
-    {
-        currentStock = 0;
-        StartCoroutine(SpawnObject());
-    }
-
     private void Update()
     {
         _productionTimer += Time.deltaTime;
@@ -44,14 +38,14 @@ public class Extractor : MonoBehaviour
         }
     }
 
-    // coroutine spawn object at interval
     private IEnumerator SpawnObject()
-    {
-        if (currentStock <= 0) yield break;
-        
-        Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
-        currentStock -= 1;
-        yield return new WaitForSeconds(outputInterval);
+    {        
+        if (currentStock > 0)
+        { 
+            Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
+            currentStock -= 1;
+            yield return new WaitForSeconds(outputInterval);
+        }
     }
 
     private void ProduceResource()
