@@ -19,15 +19,12 @@ public class RessourceMovement : MonoBehaviour
 
     public void Update()
     {
-        if (target == null || !shouldMove)
-        {
+        if (target == null || !shouldMove) 
             return;
-        }
-
-        print("moving");
+        
         var direction = target.transform.position - transform.position;
         var distance = direction.magnitude;
-        var movement = direction.normalized * speed * Time.deltaTime;
+        var movement = direction.normalized * (speed * Time.deltaTime);
         if (movement.magnitude > distance)
         {
             movement = direction;
