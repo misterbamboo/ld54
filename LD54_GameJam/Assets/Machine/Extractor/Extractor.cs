@@ -16,7 +16,9 @@ public class Extractor : MonoBehaviour
     [SerializeField] private int productionRate;
 
     [SerializeField] private Animator animator;
-    
+
+    [SerializeField] private ConnectionDetection connectionDetection;
+
     private float _productionTimer;
     private float _outputTimer;
 
@@ -36,19 +38,18 @@ public class Extractor : MonoBehaviour
 
         if (_outputTimer >= outputInterval)
         {
-            StartCoroutine(SpawnObject());
+            SpawnObject();
             _outputTimer = 0;
         }
     }
 
-    private IEnumerator SpawnObject()
+    private void SpawnObject()
     {        
-        if (currentStock > 0)
+        if (currentStock > 0 && connectionDetection.IsConnected)
         {
             animator.SetTrigger("Output");
             Instantiate(prefabRessource, spawnPosition.transform.position, Quaternion.identity);
             currentStock -= 1;
-            yield return new WaitForSeconds(outputInterval);
         }
     }
 

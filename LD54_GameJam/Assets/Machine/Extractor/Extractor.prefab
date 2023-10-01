@@ -44,6 +44,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97254857edfe009488d756fb0cd6e0ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &3864742595663282487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8791489529424137216}
+  - component: {fileID: 9222761259322667440}
+  - component: {fileID: 24688022750569880}
+  m_Layer: 0
+  m_Name: ConnectionDetection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8791489529424137216
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3864742595663282487}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.814, y: 0.822, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7063478187612865932}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &9222761259322667440
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3864742595663282487}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.3741414, y: 0.3741414, z: 0.3741414}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &24688022750569880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3864742595663282487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c85a00124c60a4f9e43b065821c694, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3908367581103525901
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,6 +217,7 @@ Transform:
   m_Children:
   - {fileID: 1956350394654993388}
   - {fileID: 8437542008827171406}
+  - {fileID: 8791489529424137216}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -183,6 +242,7 @@ MonoBehaviour:
   outputInterval: 1
   productionRate: 5
   animator: {fileID: 9184857364662346016}
+  connectionDetection: {fileID: 24688022750569880}
 --- !u!95 &9184857364662346016
 Animator:
   serializedVersion: 4
