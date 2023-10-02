@@ -124,7 +124,7 @@ MonoBehaviour:
     prefab: {fileID: 1227269047197481081, guid: b3912b6b9e9aaba4fac50766ab94e15a,
       type: 3}
   - menuItemType: 2
-    prefab: {fileID: 1227269047197481081, guid: 27db505991938c2439fabb3eb7b64cca,
+    prefab: {fileID: 1227269047197481081, guid: 57a8ece5ba7ce184c9d590a51cf5f741,
       type: 3}
   - menuItemType: 3
     prefab: {fileID: 4251972140170314259, guid: 509543196e9a4f3409972712a3a268a5,
