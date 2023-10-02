@@ -15,8 +15,6 @@ public class Extractor : MonoBehaviour
 
     [SerializeField] private int productionRate;
 
-    [SerializeField] private Animator animator;
-
     private List<ConnectionDetection> connectionDetections = new List<ConnectionDetection>();
 
     private float _productionTimer;
@@ -52,7 +50,6 @@ public class Extractor : MonoBehaviour
         var connectionDetectionConnecteds = connectionDetections.Where(c => c.IsConnected);
         if (connectionDetectionConnecteds.Count() > 0 && currentStock > 0)
         {
-            SetTrigger("Output");
             foreach (var connectionDetection in connectionDetectionConnecteds)
             {
                 if (currentStock > 0)
@@ -65,27 +62,10 @@ public class Extractor : MonoBehaviour
         }
     }
 
-    private void SetTrigger(string name)
-    {
-        if (animator == null)
-        {
-            Debug.LogError("Animator is not assigned");
-        }
-        else
-        {
-            animator.SetTrigger(name);
-        }
-    }
-
     private void ProduceResource()
     {
         var stockDelta = currentStock + productionRate <= maxStock
             ? productionRate : maxStock - currentStock;
-
-        if (stockDelta > 0)
-        {
-            SetTrigger("Produce");
-        }
 
         currentStock += stockDelta;
     }
