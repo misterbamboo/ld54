@@ -82,7 +82,10 @@ public class BuildModeController : MonoBehaviour, IBuildModeController
 
     public void AbortBuildMode()
     {
-        Destroy(factoryItem.gameObject);
+        if (factoryItem != null)
+        {
+            Destroy(factoryItem.gameObject);
+        }
         factoryItem = null;
     }
 

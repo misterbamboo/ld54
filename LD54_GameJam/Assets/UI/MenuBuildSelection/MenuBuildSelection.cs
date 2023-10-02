@@ -20,6 +20,8 @@ public class MenuBuildSelection : MonoBehaviour
         // on mouse click move menu selection to mouse position
         if (Input.GetMouseButtonDown(1))
         {
+            BuildModeController.Instance.AbortBuildMode();
+
             if (menuSelection.GetComponent<UnityEngine.UI.Image>().enabled)
             {
                 return;
