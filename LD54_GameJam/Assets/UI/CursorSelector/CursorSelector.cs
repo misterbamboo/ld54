@@ -17,7 +17,7 @@ public class CursorSelector : MonoBehaviour, ICursorSelector
     [SerializeField] int maxX = 4;
     [SerializeField] int maxZ = 4;
 
-    private int CurrentViewedLayer;
+    private int CurrentViewedLayer = -1; // -1 to force hate 1 update at begining
 
     private ILayerNavigation LayerNavigationInstance { get; set; }
     public Vector3 CursorPos { get; private set; }
@@ -62,9 +62,9 @@ public class CursorSelector : MonoBehaviour, ICursorSelector
         if (Physics.Raycast(ray, out hit, 100, cursorSelectionPlaneMask))
         {
             var point = hit.point;
-            point.x = Mathf.FloorToInt(Mathf.Clamp(point.x + 0.5f, minX, maxX));
+            point.x = Mathf.Clamp(Mathf.FloorToInt(point.x + 0.5f), minX, maxX);
             point.y = (int)point.y;
-            point.z = Mathf.FloorToInt(Mathf.Clamp(point.z + 0.5f, minZ, maxZ));
+            point.z = Mathf.Clamp(Mathf.FloorToInt(point.z + 0.5f), minZ, maxZ);
 
             if (CursorPos != point)
             {

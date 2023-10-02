@@ -15,9 +15,9 @@ public class CameraController : MonoBehaviour, ICameraController
 
     public event Action OnTargetRadAngleChanged;
 
-    [SerializeField] float yOffset = 8;
-    [SerializeField] float lookAtYOffset = 2;
-    [SerializeField] float distOffset = 5;
+    [SerializeField] float yOffset = 10;
+    [SerializeField] float lookAtYOffset = -1;
+    [SerializeField] float distOffset = 6;
 
     private ILayerNavigation LayerNavigationInstance { get; set; }
     private int TargetViewedLayer { get; set; }

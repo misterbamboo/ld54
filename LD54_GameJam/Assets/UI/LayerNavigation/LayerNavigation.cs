@@ -18,18 +18,21 @@ public class LayerNavigation : MonoBehaviour, ILayerNavigation
 
     public int ViewedLayer { get; private set; }
 
+    private bool layerInit = false;
+
     private void Awake()
     {
         _instance = this;
     }
 
-    private void Start()
-    {
-        OnLayerChanged?.Invoke(0);
-    }
-
     private void Update()
     {
+        if (!layerInit)
+        {
+            layerInit = true;
+            OnLayerChanged?.Invoke(0);
+        }
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             ViewedLayer++;
