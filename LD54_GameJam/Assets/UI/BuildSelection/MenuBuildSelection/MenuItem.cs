@@ -26,10 +26,10 @@ public enum MenuItemType
     ExtractorBlue,
     ExtractorYellow,
     Belt,
+    Storage,
     Elevator,
     Forge,
     Splitter,
     Merger,
-    Storage,
     Garbage
 }
